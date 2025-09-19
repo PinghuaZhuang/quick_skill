@@ -164,7 +164,7 @@ class QuickCastManager:
         self.lock = True
         # 如果当前存在alt按键被按下，等待按键释放
         while keyboard.is_pressed('alt'):
-            time.sleep(0.001)
+            time.sleep(0.01)
         # for key in combo['sequence']:
         #     keyboard.press(key)
         #     delay = self.settings["key_interval"] * random.uniform(0.66, 1.33)
