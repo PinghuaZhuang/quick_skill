@@ -393,9 +393,9 @@ class mgr:
                 if not key[2:].isdigit() or int(key[2:]) > 10000:
                     simpledialog.messagebox.showerror("新增方案", "无效的按键序列")
                     return
-            elif len(key) > 1:
-                simpledialog.messagebox.showerror("新增方案", "无效的按键序列")
-                return
+            # elif len(key) > 1:
+            #     simpledialog.messagebox.showerror("新增方案", "无效的按键序列")
+            #     return
         self.quick_mgr.add_combo_to_cast(self.now_choose_cast,trigger_key,sequence,self.is_start)
         self.ui_mgr.on_add_combo({"trigger_key":trigger_key,"sequence":sequence})
 

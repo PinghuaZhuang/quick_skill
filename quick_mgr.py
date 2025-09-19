@@ -213,6 +213,8 @@ class QuickCastManager:
             # print("key:", real_key)
 
             # 添加长按机制
+            # 直接修改 quuick.json 文件, 检测用户输入的代码不太好, v1.31没改
+            # space: u:200 i
             long_press_time = int(0)
             if (":" in real_key):
                 tmp = real_key.split(":")
