@@ -3,6 +3,7 @@ import keyboard
 import random
 import time
 import os
+import re
 from pynput import mouse
 from ctypes import windll
 mouseController = mouse.Controller()
@@ -218,6 +219,13 @@ class QuickCastManager:
             long_press_time = int(0)
             if (":" in real_key):
                 tmp = real_key.split(":")
+                combo["long_press_trigger"] = tmp[0]
+                if (tmp[1] == ""):
+                    tmp[1] = 0
+                    combo["long_press"] = "infinity"
+                else:
+                    combo["long_press_time"] = long_press_time
+
                 real_key = tmp[0]
                 long_press_time = random.uniform(0.95, 1.051) * 0.001 * int(tmp[1])
 
@@ -261,6 +269,8 @@ class QuickCastManager:
             # print(key[0]+" time_step", self.time_step)
             if key[1]:
                 keyboard.press(key[0])
+                while keyboard.is_pressed(combo["trigger_key"]) and combo["long_press"] == "infinity" and combo["long_press_trigger"] == key[0]:
+                    time.sleep(0.01)
             else:
                 keyboard.release(key[0])
         self.lock = False
