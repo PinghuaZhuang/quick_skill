@@ -108,7 +108,7 @@ class QuickCastManager:
                 if combo["trigger_key"] == trigger_key:
                     combo["sequence"] = sequence
                     find = True
-                    break        
+                    break
             if not find:
                 self.quick_casts[cast_name].append({"trigger_key": trigger_key, "sequence": sequence})
         else:
@@ -119,7 +119,7 @@ class QuickCastManager:
             else:
                 keyboard.add_hotkey("alt+" + trigger_key, self.run_combo, args=({"trigger_key": trigger_key, "sequence": sequence},))
         self.save_quick_casts()
-    
+
     def run_listener(self,cast_name):
         # 选择方案
         if cast_name not in self.quick_casts:
@@ -130,6 +130,16 @@ class QuickCastManager:
                 self.mouse_combo[combo["trigger_key"]] = combo
             else:
                 keyboard.add_hotkey(combo["trigger_key"], self.run_combo, args=(combo,))
+
+                keyboard.add_hotkey("a+" + combo["trigger_key"], self.run_combo, args=(combo,))
+                keyboard.add_hotkey("s+" + combo["trigger_key"], self.run_combo, args=(combo,))
+                keyboard.add_hotkey("d+" + combo["trigger_key"], self.run_combo, args=(combo,))
+                keyboard.add_hotkey("w+" + combo["trigger_key"], self.run_combo, args=(combo,))
+
+                keyboard.add_hotkey("a+w+" + combo["trigger_key"], self.run_combo, args=(combo,))
+                keyboard.add_hotkey("a+s+" + combo["trigger_key"], self.run_combo, args=(combo,))
+                keyboard.add_hotkey("d+w+" + combo["trigger_key"], self.run_combo, args=(combo,))
+                keyboard.add_hotkey("d+s+" + combo["trigger_key"], self.run_combo, args=(combo,))
         self.cast_name = cast_name
         return True
 
@@ -146,7 +156,7 @@ class QuickCastManager:
             if find:
                 return False
         return True
-        
+
 
     def run_combo(self, combo):
         if self.lock:

@@ -4,3 +4,5 @@ __pycache__
 /quick.json
 /pack/gui.exe
 pack.rar
+dist
+build
