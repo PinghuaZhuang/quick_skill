@@ -32,7 +32,7 @@ class QuickCastManager:
         """
         if not pressed:
             return
-        print(self.mouse_combo)
+        # print(self.mouse_combo)
         if button == mouse.Button.x1:
             if 'x1' not in self.mouse_combo:
                 return
@@ -162,6 +162,8 @@ class QuickCastManager:
         if self.lock:
             return
         self.lock = True
+        # self.time_step = 0
+        # self.timestamp = time.time()
         # 如果当前存在alt按键被按下，等待按键释放
         while keyboard.is_pressed('alt'):
             time.sleep(0.01)
@@ -207,13 +209,24 @@ class QuickCastManager:
                 real_key = "left"
             elif key == "右":
                 real_key = "right"
+
+            # print("key:", real_key)
+
+            # 添加长按机制
+            long_press_time = int(0)
+            if (":" in real_key):
+                tmp = real_key.split(":")
+                real_key = tmp[0]
+                long_press_time = random.uniform(0.95, 1.051) * 0.001 * int(tmp[1])
+
             keys.append((real_key,True,timeline_now))
             delay = self.settings["key_up_interval"] * random.uniform(0.952, 1.05)
-            keys.append((real_key,False,timeline_now+delay))
+            timeline_now += long_press_time
+            keys.append((real_key,False, timeline_now+delay))
             timeline_now += self.settings["key_interval"] * random.uniform(0.82, 1.19)
+
         keys.sort(key=lambda x: x[2])
         for i,key in enumerate(keys):
-            print(key)
             if i != 0:
                 time.sleep(key[2]-keys[i-1][2])
             if key[0] == "MLeft":
@@ -240,6 +253,10 @@ class QuickCastManager:
                 else:
                     mouseController.release(mouse.Button.x2)
                 continue
+            # timestamp = time.time()
+            # self.time_step = timestamp - self.timestamp
+            # self.timestamp = timestamp
+            # print(key[0]+" time_step", self.time_step)
             if key[1]:
                 keyboard.press(key[0])
             else:

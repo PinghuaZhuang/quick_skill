@@ -54,7 +54,7 @@ class ui:
         screen_height = self.window.winfo_screenheight()
         self.window.geometry("%dx%d+%d+%d" % (window_x, window_y, (screen_width - window_x) / 2, (screen_height - window_y) / 2))
         self.window.focus_force()
-        
+
         left_space = weight_base * 0.5
         top_space = height_base * 0.5
 
@@ -130,7 +130,7 @@ class ui:
 
     def set_select(self, f):
         self.combobox.bind("<<ComboboxSelected>>", f)
-    
+
     def set_click_start(self, f):
         # 如果绑定按下事件，切鼠标弹起时没有在按钮上，就会出现按键陷下去的情况……所以绑定鼠标弹起事件
         self.start_button.bind("<ButtonRelease-1>", f)
@@ -143,10 +143,10 @@ class ui:
 
     def set_listbox_select(self, f):
         self.listbox.bind("<<ListboxSelect>>", f)
-    
+
     def set_listbox_double_click(self, item_f):
         self.listbox.bind("<Double-Button-1>", item_f)
-    
+
     # 一个方案开始监听后页面相关
     def on_start(self):
         self.key_interval_entry.config(state="disabled")
@@ -155,7 +155,7 @@ class ui:
         self.start_button.config(state="disabled")
         self.stop_button.config(state="normal")
         self.clear_button.config(state="disabled")
-    
+
     # 一个方案停止监听后页面相关
     def on_stop(self):
         self.key_interval_entry.config(state="normal")
@@ -192,7 +192,7 @@ class ui:
         str_list.append("<双击新增|双击已有项删除>")
         self.combobox.set(cast_name)
         self.update_list(str_list)
-    
+
     # 外部添加某个快捷键
     def on_add_combo(self,combo):
         trigger_key = combo["trigger_key"]
@@ -244,10 +244,10 @@ class ui:
                 self.combobox["values"] = self.combobox["values"][:i] + self.combobox["values"][i+1:]
                 self.combobox["values"] += ("<新增方案>",)
                 break
-    
+
     def remove_select(self, text):
         self.combobox["values"] = tuple(filter(lambda x: x != text, self.combobox["values"]))
-    
+
     def update_list(self, list):
         self.listbox.delete(0, tk.END)
         for i in list:
@@ -255,7 +255,7 @@ class ui:
 
     def start(self):
         self.window.mainloop()
-    
+
 class mgr:
     def __init__(self,ui_mgr:ui,quick_mgr:QuickCastManager) -> None:
         self.ui_mgr = ui_mgr
@@ -279,7 +279,7 @@ class mgr:
         if len(self.quick_mgr.quick_casts) == 0:
             self.add_cast(True)
             self.select_default_cast()
-        
+
         self.ui_mgr.on_set_key_interval(self.quick_mgr.settings["key_interval"],self.quick_mgr.settings["key_up_interval"])
 
     def select_default_cast(self):
@@ -380,7 +380,7 @@ class mgr:
         sequence = simpledialog.askstring("新增快捷键", "请输入按键序列,支持方向键（上下左右）,按住左右侧前侧后键键（lp|rp|x1|x2xx 按住xx毫秒）,额外支持`n表示空n ms,对应技能后摇等,以空格分隔",parent=root)
         if sequence == None or sequence == "":
             return
-        
+
         sequence = sequence.split()
         # 检查是否存在是否存在大于一个键的
         for key in sequence:
@@ -418,10 +418,10 @@ class mgr:
         self.select_cast(cast_name)
         self.ui_mgr.add_select(cast_name)
         self.ui_mgr.on_select_cast(cast_name,[])
-        
+
     def start(self):
         self.ui_mgr.start()
-    
+
 
 def main():
     # 打包的程序的实际路径是一个临时目录，所以注释
