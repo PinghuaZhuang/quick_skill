@@ -3,7 +3,6 @@ import keyboard
 import random
 import time
 import os
-import re
 from pynput import mouse
 from ctypes import windll
 mouseController = mouse.Controller()
@@ -269,7 +268,10 @@ class QuickCastManager:
             # print(key[0]+" time_step", self.time_step)
             if key[1]:
                 keyboard.press(key[0])
-                while keyboard.is_pressed(combo["trigger_key"]) and combo["long_press"] == "infinity" and combo["long_press_trigger"] == key[0]:
+                trigger_key = combo["trigger_key"]
+                if (trigger_key == 'x1' or trigger_key == 'x2' or trigger_key == 'p' or trigger_key == 'rp'):
+                    continue
+                while keyboard.is_pressed(combo["trigger_key"]) and 'long_press' in combo  and combo["long_press"] == "infinity" and combo["long_press_trigger"] == key[0]:
                     time.sleep(0.01)
             else:
                 keyboard.release(key[0])
